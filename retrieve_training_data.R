@@ -4,7 +4,7 @@ library(tidyverse)
 readRenviron("C://Users//rpwju//OneDrive//Desktop//post-game-win-expectancy-cfb//.Renviron")
 Sys.setenv(CFBD_API_KEY = Sys.getenv("API_KEY"))
 
-pbp <- cfbfastR::load_cfb_pbp(2024)
+pbp <- map_dfr(2021:2024, load_cfb_pbp)
 
 epas <- pbp %>% 
   group_by(game_id) %>% 
@@ -13,10 +13,11 @@ epas <- pbp %>%
   select(game_id, home, away, total_home_EPA, total_away_EPA) %>% 
   ungroup()
 
-game_results <- cfbfastR::espn_cfb_schedule(2024) %>% 
-  filter(type == "regular") %>% 
-  mutate(game_id = as.numeric(game_id)) %>% 
-  select(game_id, home_win)
+game_results <- map_dfr(2021:2024, ~ espn_cfb_schedule(.x) %>% mutate(season = .x)) %>%
+  filter(type == "regular") %>%
+  mutate(game_id = as.numeric(game_id)) %>%
+  select(season, game_id, home_win)
+
 
 result <- inner_join(epas, game_results, by = "game_id")
 
