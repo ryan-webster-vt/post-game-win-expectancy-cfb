@@ -1,5 +1,3 @@
-# lintr: disable=line_length_linter
-
 library(cfbfastR)
 library(tidyverse)
 library(lubridate)

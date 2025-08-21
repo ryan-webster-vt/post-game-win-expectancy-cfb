@@ -22,6 +22,3 @@ game_results <- map_dfr(2021:2024, ~ espn_cfb_schedule(.x) %>% mutate(season = .
 result <- inner_join(epas, game_results, by = "game_id")
 
 write_csv(result, "C://Users//rpwju//OneDrive//Desktop//post-game-win-expectancy-cfb//df.csv")
-
-print("Data Retrieval Complete!")
-
