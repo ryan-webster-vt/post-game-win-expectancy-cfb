@@ -1,7 +1,7 @@
 library(cfbfastR)
 library(tidyverse)
 
-readRenviron("C://Users//rpwju//OneDrive//Desktop//post-game-win-expectancy-cfb//.Renviron")
+readRenviron(file.path(getwd(), ".Renviron")) 
 Sys.setenv(CFBD_API_KEY = Sys.getenv("API_KEY"))
 
 pbp <- map_dfr(2021:2024, load_cfb_pbp)
@@ -21,4 +21,5 @@ game_results <- map_dfr(2021:2024, ~ espn_cfb_schedule(.x) %>% mutate(season = .
 
 result <- inner_join(epas, game_results, by = "game_id")
 
-write_csv(result, "C://Users//rpwju//OneDrive//Desktop//post-game-win-expectancy-cfb//df.csv")
+write_csv(result, file.path(getwd(), "df.csv"))
+
