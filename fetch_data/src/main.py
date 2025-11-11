@@ -12,7 +12,6 @@ HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 
 def lambda_handler(event, context):
     week_number = get_week()
-    print(week_number)
 
     # Fetch and save advanced stats
     fetch_and_save("stats/game/advanced", week_number, f"game_metrics/advanced_stats_week_{week_number}.parquet")
